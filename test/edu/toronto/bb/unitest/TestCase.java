@@ -19,7 +19,8 @@ public class TestCase {
 	
 	@Before
 	public void setUp() {		
-		fna = new File("C:\\temp\\java_projects\\BarcodeBooster\\test\\sample\\fna"); // at work
+//		fna = new File("C:\\temp\\java_projects\\BarcodeBooster\\test\\sample\\fna"); // at work
+		fna = new File("/home/ryan/java_projects/BarcodeBooster/test/sample/fna"); // at work
 	}
 	
 	@Test
