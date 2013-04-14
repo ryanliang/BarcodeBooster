@@ -57,8 +57,7 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
 
     @Override
     public AccessionID getAccession() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.accesionID;
     }
 
 }
