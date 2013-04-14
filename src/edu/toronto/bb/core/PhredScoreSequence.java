@@ -24,12 +24,18 @@ public class PhredScoreSequence implements Iterable<PhredScore> {
 		phredScores.set(index, score);
 	}
 	
-	private ArrayList<PhredScore> parsePhredScoreList(String sequence) {		
-		String[] rawScores= sequence.split("\\s+");
-		
+	public int length() {
+		return phredScores.size();
+	}
+	
+	private ArrayList<PhredScore> parsePhredScoreList(String sequence) {				
 		ArrayList<PhredScore> listOfScores = new ArrayList<PhredScore>();
-		for (String score : rawScores) {
-			listOfScores.add(new PhredScore(Integer.parseInt(score)));
+		
+		if (sequence != null) {
+			String[] rawScores= sequence.split("\\s+");
+			for (String score : rawScores) {
+				listOfScores.add(new PhredScore(Integer.parseInt(score)));
+			}
 		}
 		
 		return listOfScores;
