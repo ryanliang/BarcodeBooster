@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PhredScoreSequence implements Iterable<PhredScore> {
+import org.biojava3.core.sequence.AccessionID;
+import org.biojava3.core.sequence.template.Accessioned;
 
-    List<PhredScore> phredScores;
+public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
+
+    private List<PhredScore> phredScores;
+    private AccessionID accesionID;
+    
 
     public PhredScoreSequence(String sequence) {		
         this.phredScores = parsePhredScoreList(sequence);
@@ -40,11 +45,20 @@ public class PhredScoreSequence implements Iterable<PhredScore> {
 
         return listOfScores;
     }
-
+    
+    public void setAccessionID(AccessionID id) {
+        this.accesionID = id;
+    }
 
     @Override
     public Iterator<PhredScore> iterator() {		
         return phredScores.iterator();
+    }
+
+    @Override
+    public AccessionID getAccession() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

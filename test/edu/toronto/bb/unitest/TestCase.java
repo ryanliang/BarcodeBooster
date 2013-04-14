@@ -34,8 +34,9 @@ public class TestCase {
             while (it.hasNext()) {
                 Entry<String, DNASequence> entry = (Entry<String, DNASequence>) it.next();
                 System.out.println("ID: " + entry.getKey());
+                System.out.println("AD: " + entry.getValue().getAccession().getID());
                 System.out.println("Sequence:");
-                System.out.println(entry.getValue());				
+                System.out.println(entry.getValue());                
             }
         } catch (Exception e) {
             e.printStackTrace();
