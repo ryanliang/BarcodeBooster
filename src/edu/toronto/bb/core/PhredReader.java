@@ -33,6 +33,7 @@ public class PhredReader {
         
         String line = "";
         String header = "";
+        String delimiter = " "; // single space as delimiter                
         StringBuilder sb = new StringBuilder();
         int maxSequenceLength = -1;
         boolean keepGoing = true;
@@ -40,18 +41,20 @@ public class PhredReader {
         while (keepGoing) {
             line = line.trim();
             if (line.length() > 0) {
-                if (line.startsWith("<")) {
+                if (line.startsWith(">")) {
                     if (sb.length() > 0) {
                         // reach header of next sequence.  process the current sequence now
                         processOneSequence(header, sb, sequences);
                         if (maxSequenceLength < sb.length()) {
                             maxSequenceLength = sb.length();
                         }
+                        sb = new StringBuilder(maxSequenceLength);
                     }
                     header = line.substring(1);
                 } else if (line.startsWith(";")) { // ignore comment line                    
                 } else {
                     sb.append(line);
+                    sb.append(delimiter);
                 }                    
             }
             

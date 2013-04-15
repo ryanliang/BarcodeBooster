@@ -10,7 +10,7 @@ import org.junit.Test;
 import edu.toronto.bb.core.PhredScore;
 import edu.toronto.bb.core.PhredScoreSequence;
 
-public class TestPhred {
+public class PhredScoreSequenceTest {
 
 
     String phredStr;
