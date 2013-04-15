@@ -67,5 +67,14 @@ public class PhredScoreSequenceTest {
         pss.setScoreAt(new PhredScore(7), 12);
         assertEquals(7, pss.scoreAt(12).getScoreValue());
     }
+    
+    @Test
+    public void shouldHanleSingleDigitScore() {
+        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
+
+        pss.setScoreAt(new PhredScore(7), 0);
+        assertEquals(0, pss.scoreAt(147).getScoreValue());
+
+    }
 
 }
