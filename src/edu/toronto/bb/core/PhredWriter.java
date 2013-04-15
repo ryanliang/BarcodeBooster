@@ -26,8 +26,8 @@ public class PhredWriter {
      * Allow to overwrite the system's line separator
      * @param newLineSeparator
      */
-    public void setLineSeparator(byte[] newLineSeparator) {
-        this.lineSep = newLineSeparator;
+    public void setLineSeparator(String newLineSeparator) {
+        this.lineSep = newLineSeparator.getBytes();
     }
 
 
@@ -36,36 +36,35 @@ public class PhredWriter {
      * @throws IOException 
      */
     public void process() throws IOException {				
-        StringBuilder sb = new StringBuilder();		
-
         for (PhredScoreSequence sequence : sequences) {			
-            buildHeader(sb, sequence);
-            buildSequenceContents(sb, sequence);
-            os.write(sb.toString().getBytes());
+            buildHeader(sequence);
+            buildSequenceContents(sequence);            
         }
-
     }
 
-    private void buildHeader(StringBuilder sb, PhredScoreSequence sequence) {
-        sb.append(">");
-        sb.append(sequence.getAccession());
-        sb.append(lineSep);			
+    private void buildHeader(PhredScoreSequence sequence) throws IOException {        
+        os.write('>');
+        os.write(sequence.getAccession().getID().getBytes());
+        os.write(lineSep);
     }
 
-    private void buildSequenceContents(StringBuilder sb, PhredScoreSequence sequence) {
+    private void buildSequenceContents(PhredScoreSequence sequence) throws IOException {
         List<PhredScore> scores = sequence.getScores();
         int seqSize = scores.size();
+        int scoresWrittenSoFar = 0;
 
         for (int i = 0; i < seqSize; i++) {
-            if (i > 0 && i % scoresPerLine == 0) {
-                sb.append(lineSep);
+            scoresWrittenSoFar++;
+            if (scoresWrittenSoFar % scoresPerLine == 0) {
+                os.write(scores.get(i).toString().getBytes());
+                os.write(lineSep);
             } else {
-                sb.append(scores.get(i).toString());
-                sb.append(delimiter);
+                os.write(scores.get(i).toString().getBytes());
+                os.write(delimiter.getBytes());
             }
 
         }
-
+        os.write(lineSep);  // end of the current sequence
     }
 
 
