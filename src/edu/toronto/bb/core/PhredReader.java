@@ -35,9 +35,6 @@ public class PhredReader {
         String header = "";
         StringBuilder sb = new StringBuilder();
         int maxSequenceLength = -1;
-        AccessionID accessionId;
-//        long fileIndex = 0;
-//        long sequenceIndex = 0;
         boolean keepGoing = true;
         
         while (keepGoing) {
@@ -46,8 +43,7 @@ public class PhredReader {
                 if (line.startsWith("<")) {
                     if (sb.length() > 0) {
                         // reach header of next sequence.  process the current sequence now
-                        accessionId = new AccessionID(header);
-                        sequences.put(accessionId.getID(), new PhredScoreSequence(sb.toString()));
+                        processOneSequence(header, sb, sequences);
                         if (maxSequenceLength < sb.length()) {
                             maxSequenceLength = sb.length();
                         }
@@ -62,12 +58,22 @@ public class PhredReader {
             line = br.readLine();
             
             if (line == null) { // last sequence in the file
-                accessionId = new AccessionID(header);
-                sequences.put(accessionId.getID(), new PhredScoreSequence(sb.toString()));
+                processOneSequence(header, sb, sequences);
                 keepGoing = false;
             }
         }
         
         return sequences;
+    }
+    
+    private void processOneSequence(String header, StringBuilder sequenceContents,  
+            LinkedHashMap<String, PhredScoreSequence> sequences) {        
+        AccessionID accessionId;
+        PhredScoreSequence currSequence;
+        
+        accessionId = new AccessionID(header);
+        currSequence = new PhredScoreSequence(sequenceContents.toString());
+        currSequence.setAccessionID(accessionId);
+        sequences.put(accessionId.getID(),currSequence);           
     }
 }
