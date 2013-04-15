@@ -29,7 +29,7 @@ public class PhredReaderTest {
     public void shouldReadPhredFile() {
         try {
             PhredReader reader = new PhredReader(qual);
-            LinkedHashMap<String, PhredScoreSequence> sequences  = reader.process();
+            LinkedHashMap<String, PhredScoreSequence> sequences  = reader.process();            
             
             assertTrue(sequences.size() == 5);
         } catch (FileNotFoundException e) {
