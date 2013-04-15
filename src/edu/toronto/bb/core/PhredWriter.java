@@ -55,16 +55,23 @@ public class PhredWriter {
 
         for (int i = 0; i < seqSize; i++) {
             scoresWrittenSoFar++;
-            if (scoresWrittenSoFar % scoresPerLine == 0) {
+            if (shouldWriteLineSep(scoresWrittenSoFar, seqSize)) {
                 os.write(scores.get(i).toString().getBytes());
                 os.write(lineSep);
             } else {
                 os.write(scores.get(i).toString().getBytes());
                 os.write(delimiter.getBytes());
             }
+            
+            
 
         }
         os.write(lineSep);  // end of the current sequence
+    }
+    
+    private boolean shouldWriteLineSep(int scoresWrittenSoFar, int seqSize) {
+        return scoresWrittenSoFar % scoresPerLine == 0 
+                &&  scoresWrittenSoFar != seqSize;  // no need to write new line at the end of current sequence sample
     }
 
 
