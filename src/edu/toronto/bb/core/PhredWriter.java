@@ -30,7 +30,6 @@ public class PhredWriter {
         this.lineSep = newLineSeparator.getBytes();
     }
 
-
     /**
      * Write the sequence to the OutputStream os
      * @throws IOException 
@@ -61,10 +60,7 @@ public class PhredWriter {
             } else {
                 os.write(scores.get(i).toString().getBytes());
                 os.write(delimiter.getBytes());
-            }
-            
-            
-
+            }                        
         }
         os.write(lineSep);  // end of the current sequence
     }
