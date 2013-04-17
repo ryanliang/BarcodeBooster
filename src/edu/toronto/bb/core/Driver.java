@@ -11,9 +11,17 @@ import org.apache.commons.cli.ParseException;
 
 public class Driver {
 
+    // Command line options
+    private static final String fi ="fi";  // FNA input
+    private static final String fo ="fo";  // FNA output
+    private static final String qi ="qi";  // QUAL input
+    private static final String qo ="qo";  // QUAL output
+
     public static void main(String[] argv) throws ParseException {
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse(buildOptions(), argv);
+        
+        // Create a Barcode Booster Class to do the actual work
     }
     
     public static Options buildOptions() {        
@@ -22,25 +30,25 @@ public class Driver {
          Option fnaInputFile = OptionBuilder.withArgName("file")
                                  .hasArg()
                                  .withDescription("FNA Input File")
-                                 .create("fi");
+                                 .create(fi);
          
                   
          Option fnaOutputFile = OptionBuilder.withArgName("file")
                                  .hasArg()
                                  .withDescription("FNA Output File")
-                                 .create("fo");
+                                 .create(fo);
          
          
          Option qualInputFile = OptionBuilder.withArgName("file")
                                  .hasArg()
                                  .withDescription("QUAL Input File")
-                                 .create("qi");
+                                 .create(qi);
                 
          
          Option qualOutputFile = OptionBuilder.withArgName("file")
                                  .hasArg()
                                  .withDescription("QUAL Output File")
-                                 .create("qo");
+                                 .create(qo);
          
          
          options.addOption(fnaInputFile);

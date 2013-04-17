@@ -2,13 +2,13 @@ package edu.toronto.bb.unitest;
 
 import static org.junit.Assert.*;
 import edu.toronto.bb.core.*;
+import edu.toronto.bb.core.phred.PhredReader;
+import edu.toronto.bb.core.phred.PhredScoreSequence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 
 import org.junit.Before;
 

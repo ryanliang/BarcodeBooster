@@ -11,9 +11,9 @@ import java.util.LinkedHashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.toronto.bb.core.PhredReader;
-import edu.toronto.bb.core.PhredScoreSequence;
-import edu.toronto.bb.core.PhredWriter;
+import edu.toronto.bb.core.phred.PhredReader;
+import edu.toronto.bb.core.phred.PhredScoreSequence;
+import edu.toronto.bb.core.phred.PhredWriter;
 
 public class PhredWriterTest {
 

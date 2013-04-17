@@ -7,8 +7,8 @@ import org.junit.Before;
 
 import org.junit.Test;
 
-import edu.toronto.bb.core.PhredScore;
-import edu.toronto.bb.core.PhredScoreSequence;
+import edu.toronto.bb.core.phred.PhredScore;
+import edu.toronto.bb.core.phred.PhredScoreSequence;
 
 public class PhredScoreSequenceTest {
 
