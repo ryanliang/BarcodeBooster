@@ -1,10 +1,54 @@
 package edu.toronto.bb.core;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.BasicParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 
 public class Driver {
 
-    public static void main(String[] argv) {
-
+    public static void main(String[] argv) throws ParseException {
+        CommandLineParser parser = new BasicParser();
+        CommandLine cmd = parser.parse(buildOptions(), argv);
+    }
+    
+    public static Options buildOptions() {        
+         Options options = new Options();
+         
+         Option fnaInputFile = OptionBuilder.withArgName("file")
+                                 .hasArg()
+                                 .withDescription("FNA Input File")
+                                 .create("fi");
+         
+                  
+         Option fnaOutputFile = OptionBuilder.withArgName("file")
+                                 .hasArg()
+                                 .withDescription("FNA Output File")
+                                 .create("fo");
+         
+         
+         Option qualInputFile = OptionBuilder.withArgName("file")
+                                 .hasArg()
+                                 .withDescription("QUAL Input File")
+                                 .create("qi");
+                
+         
+         Option qualOutputFile = OptionBuilder.withArgName("file")
+                                 .hasArg()
+                                 .withDescription("QUAL Output File")
+                                 .create("qo");
+         
+         
+         options.addOption(fnaInputFile);
+         options.addOption(fnaOutputFile);
+         options.addOption(qualInputFile);         
+         options.addOption(qualOutputFile);         
+         
+         return options;
     }
 
 }
