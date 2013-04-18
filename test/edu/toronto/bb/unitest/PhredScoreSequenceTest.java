@@ -76,5 +76,14 @@ public class PhredScoreSequenceTest {
         assertEquals(0, pss.scoreAt(147).getScoreValue());
 
     }
+    
+    @Test
+    public void shouldPushNewScore() {
+        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
+
+        pss.pushScore(new PhredScore(17));
+        assertEquals(17, pss.scoreAt(0).getScoreValue());
+
+    }
 
 }
