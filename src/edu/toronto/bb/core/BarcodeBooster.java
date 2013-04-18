@@ -25,6 +25,7 @@ import org.biojava3.core.sequence.io.template.FastaHeaderFormatInterface;
 import org.biojava3.core.sequence.io.template.SequenceCreatorInterface;
 
 import edu.toronto.bb.core.phred.PhredReader;
+import edu.toronto.bb.core.phred.PhredScore;
 import edu.toronto.bb.core.phred.PhredScoreSequence;
 import edu.toronto.bb.core.phred.PhredWriter;
 
@@ -69,7 +70,7 @@ public class BarcodeBooster {
         dnaSequences = fastaReader.process();
         qualSequences = phredReader.process();
         
-        searchForBarcodeAndInsertKeyToSequence();
+        searchForBarcodeAndInsertMarkerToSequence();
         
         fastaWriter.process();
         phredWriter.process();
@@ -77,28 +78,36 @@ public class BarcodeBooster {
         closeIO();
     }    
     
-    public String getKey() {
+    public String getMarker() {
         return marker;
     }
 
-    public void setKey(String key) {
+    public void setMarker(String key) {
         this.marker = key;
     }
-    
-    private void searchForBarcodeAndInsertKeyToSequence() {
+        
+    private void searchForBarcodeAndInsertMarkerToSequence() {
         DNASequence newDNASequence;
         DNASequence currDNASequence;
+        PhredScoreSequence currPhredScoreSequence;
         String currKey;
         
         for(Entry<String, DNASequence> entry : dnaSequences.entrySet() ) {
             currDNASequence = entry.getValue();
             currKey = entry.getKey();
+            
             if (containsBarcode(currDNASequence.toString(), barcodes)) {
                  newDNASequence = new DNASequence(marker + currDNASequence.toString());
                  newDNASequence.setAccession(currDNASequence.getAccession());
                  dnaSequences.put(entry.getKey(), newDNASequence);
                  
-                 // handle phredscore here
+                 currPhredScoreSequence = qualSequences.get(currKey);
+                 if (currPhredScoreSequence == null) {
+                     throw new IllegalArgumentException("No matching PhredScore Sequence with header " + entry.getKey());
+                 } else {
+                     currPhredScoreSequence.pushScore(new PhredScore(PhredScore.MAX_SCORE));
+                     // do i need to put it back to the hashmap?
+                 }
             }
         }
         
