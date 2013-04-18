@@ -1,12 +1,20 @@
 package edu.toronto.bb.unitest;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+import java.util.Properties;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 
@@ -26,6 +34,7 @@ public class TestCase {
     }
 
     @Test
+    @Ignore
     public void shouldReadFastaFile() {
         try {
             LinkedHashMap<String, DNASequence> dnaSeqMap = FastaReaderHelper.readFastaDNASequence(fna);
@@ -42,5 +51,41 @@ public class TestCase {
             e.printStackTrace();
         }		
     }
+    
+    @Test 
+    public void shoudLoadConfig() {
+        FileInputStream f;
+        try {
+            f = new FileInputStream("config/barcodes");
+            assertNotNull(f.read());            
+        } catch (FileNotFoundException e) {
+            assertFalse(true);
+            e.printStackTrace();
+        } catch (IOException e) {
+            assertFalse(true);
+            e.printStackTrace();
+        }
+        
+        
+        
+    }
+//    
+//    @Test
+//    public void shouldWriteProperties() {
+//        Properties prop = new Properties();
+//        
+//        try {
+//            //set the properties value
+//            prop.setProperty("database", "localhost");
+//            prop.setProperty("dbuser", "mkyong");
+//            prop.setProperty("dbpassword", "password");
+// 
+//            //save properties to project root folder
+//            prop.store(new FileOutputStream("config.properties"), null);
+// 
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
 }
