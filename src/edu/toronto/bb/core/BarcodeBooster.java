@@ -52,7 +52,7 @@ public class BarcodeBooster {
     private final String pathToBarcodes = "config/barcodes";
     private final int barcodeLength = 10;  // length of one barcode
     
-    private String key = "";  // key to be inserted
+    private String marker = "";  // key to be inserted
 
     public BarcodeBooster(File fnaIn, File fnaOut, File qualIn, File qualOut) throws FileNotFoundException {
         this.fnaIn = fnaIn;
@@ -78,22 +78,23 @@ public class BarcodeBooster {
     }    
     
     public String getKey() {
-        return key;
+        return marker;
     }
 
     public void setKey(String key) {
-        this.key = key;
+        this.marker = key;
     }
     
     private void searchForBarcodeAndInsertKeyToSequence() {
         DNASequence newDNASequence;
         DNASequence currDNASequence;
         String currKey;
+        
         for(Entry<String, DNASequence> entry : dnaSequences.entrySet() ) {
             currDNASequence = entry.getValue();
             currKey = entry.getKey();
             if (containsBarcode(currDNASequence.toString(), barcodes)) {
-                 newDNASequence = new DNASequence(key + currDNASequence.toString());
+                 newDNASequence = new DNASequence(marker + currDNASequence.toString());
                  newDNASequence.setAccession(currDNASequence.getAccession());
                  dnaSequences.put(entry.getKey(), newDNASequence);
                  
