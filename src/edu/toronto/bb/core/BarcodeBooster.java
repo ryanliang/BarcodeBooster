@@ -165,6 +165,10 @@ public class BarcodeBooster {
             sb.append(delimiter);
             line = br.readLine();
         }
+        
+        br.close();
+        reader.close();
+        barcodeFile.close();
 
         return sb.toString();
     }
