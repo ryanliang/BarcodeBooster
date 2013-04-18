@@ -1,12 +1,14 @@
 package edu.toronto.bb.core;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
@@ -45,22 +47,45 @@ public class BarcodeBooster {
     private LinkedHashMap<String,PhredScoreSequence> qualSequences;
     
     private String barcodes; // contains the CSV formats of the barcode
+    private final String pathToBarcodes = "config/barcodes";
     
+    private String key = "";  // key to be inserted
+
     public BarcodeBooster(File fnaIn, File fnaOut, File qualIn, File qualOut) throws FileNotFoundException {
         this.fnaIn = fnaIn;
         this.fnaOut = fnaOut;
         this.qualIn = qualIn;
         this.qualOut = qualOut;       
-        
+                
         initIO();        
     }
     
-    public void process() throws IOException {
+    public void process() throws Throwable {
+        barcodes = loadBarcodes();
+        
         dnaSequences = fastaReader.process();
         qualSequences = phredReader.process();
+        
+        searchForBarcodeAndInsertKeyToSequence();
+        
+        fastaWriter.process();
+        phredWriter.process();
+        
         closeIO();
+    }    
+    
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
     
+    private void searchForBarcodeAndInsertKeyToSequence() {
+        
+    }    
+        
     private void initIO() throws FileNotFoundException {        
         fnaInputStream = new FileInputStream(fnaIn);
         fnaOutputStream = new FileOutputStream(fnaOut);
@@ -87,5 +112,23 @@ public class BarcodeBooster {
         fnaOutputStream.close();
         qualInputStream.close();
         qualOutputStream.close();
+    }
+    
+    private String loadBarcodes() throws IOException {
+        FileInputStream barcodeFile = new FileInputStream(pathToBarcodes);
+        InputStreamReader reader = new InputStreamReader(barcodeFile);
+        BufferedReader br = new BufferedReader(reader);
+        
+        StringBuilder sb = new StringBuilder();         
+        String delimiter =",";
+        String line = br.readLine();
+        
+        while (line != null ) {
+            sb.append(line);
+            sb.append(delimiter);
+            line = br.readLine();
+        }
+        
+        return sb.toString();
     }
 }
