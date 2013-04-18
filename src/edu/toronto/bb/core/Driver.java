@@ -16,12 +16,14 @@ public class Driver {
     private static final String fo ="fo";  // FNA output
     private static final String qi ="qi";  // QUAL input
     private static final String qo ="qo";  // QUAL output
+    private static final String key ="k";  // QUAL output
 
     public static void main(String[] argv) throws ParseException {
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = parser.parse(buildOptions(), argv);
         
         // Create a Barcode Booster Class to do the actual work
+//        BarcodeBooster bb = new BarcodeBooster(fnaIn, fnaOut, qualIn, qualOut);
     }
     
     public static Options buildOptions() {        
@@ -50,11 +52,17 @@ public class Driver {
                                  .withDescription("QUAL Output File")
                                  .create(qo);
          
+         Option markerKey = OptionBuilder.withArgName("key")
+                                 .hasArg()
+                                 .withDescription("Key to insert")
+                                 .create(key);
+         
          
          options.addOption(fnaInputFile);
          options.addOption(fnaOutputFile);
          options.addOption(qualInputFile);         
          options.addOption(qualOutputFile);         
+         options.addOption(markerKey);         
          
          return options;
     }
