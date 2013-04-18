@@ -33,8 +33,7 @@ public class TestCase {
         qual = new File("/home/ryan/java_projects/BarcodeBooster/test/sample/qual"); // at work
     }
 
-    @Test
-    @Ignore
+    @Test    
     public void shouldReadFastaFile() {
         try {
             LinkedHashMap<String, DNASequence> dnaSeqMap = FastaReaderHelper.readFastaDNASequence(fna);
@@ -42,8 +41,8 @@ public class TestCase {
 
             while (it.hasNext()) {
                 Entry<String, DNASequence> entry = (Entry<String, DNASequence>) it.next();
-                System.out.println("ID: " + entry.getKey());
-                System.out.println("AD: " + entry.getValue().getAccession().getID());
+//                System.out.println("ID: " + entry.getKey());
+//                System.out.println("AD: " + entry.getValue().getAccession().getID());
                 System.out.println("Sequence:");
                 System.out.println(entry.getValue());                
             }

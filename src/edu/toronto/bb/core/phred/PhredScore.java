@@ -2,7 +2,8 @@ package edu.toronto.bb.core.phred;
 
 public class PhredScore {
 
-    private final int MAX_SCORE = 40;	
+    public final int MAX_SCORE = 40;
+    
     int score;
 
     public PhredScore(int score) {		

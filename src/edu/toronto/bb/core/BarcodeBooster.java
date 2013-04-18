@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
+import org.biojava3.core.sequence.AccessionID;
 import org.biojava3.core.sequence.DNASequence;
 import org.biojava3.core.sequence.compound.DNACompoundSet;
 import org.biojava3.core.sequence.compound.NucleotideCompound;
@@ -48,6 +50,7 @@ public class BarcodeBooster {
     
     private String barcodes; // contains the CSV formats of the barcode
     private final String pathToBarcodes = "config/barcodes";
+    private final int barcodeLength = 10;  // length of one barcode
     
     private String key = "";  // key to be inserted
 
@@ -83,8 +86,26 @@ public class BarcodeBooster {
     }
     
     private void searchForBarcodeAndInsertKeyToSequence() {
+        DNASequence newDNASequence;
+        DNASequence currDNASequence;
+        String currKey;
+        for(Entry<String, DNASequence> entry : dnaSequences.entrySet() ) {
+            currDNASequence = entry.getValue();
+            currKey = entry.getKey();
+            if (containsBarcode(currDNASequence.toString(), barcodes)) {
+                 newDNASequence = new DNASequence(key + currDNASequence.toString());
+                 newDNASequence.setAccession(currDNASequence.getAccession());
+                 dnaSequences.put(entry.getKey(), newDNASequence);
+                 
+                 // handle phredscore here
+            }
+        }
         
-    }    
+    }
+    
+    private boolean containsBarcode(String sequenceData, String barcodes) {
+        return barcodes.contains(sequenceData.substring(0, barcodeLength));
+    }
         
     private void initIO() throws FileNotFoundException {        
         fnaInputStream = new FileInputStream(fnaIn);
