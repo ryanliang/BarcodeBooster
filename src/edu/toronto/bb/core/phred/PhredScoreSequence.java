@@ -2,6 +2,7 @@ package edu.toronto.bb.core.phred;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.biojava3.core.sequence.AccessionID;
@@ -9,7 +10,7 @@ import org.biojava3.core.sequence.template.Accessioned;
 
 public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
 
-    private List<PhredScore> phredScores;
+    private LinkedList<PhredScore> phredScores;
     private AccessionID accesionID;
     
 
@@ -28,13 +29,17 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
     public void setScoreAt(PhredScore score, int index) {
         phredScores.set(index, score);
     }
+    
+    public void pushScore(PhredScore score) {
+        phredScores.push(score);
+    }
 
     public int length() {
         return phredScores.size();
     }
 
-    private ArrayList<PhredScore> parsePhredScoreList(String sequence) {				
-        ArrayList<PhredScore> listOfScores = new ArrayList<PhredScore>();
+    private LinkedList<PhredScore> parsePhredScoreList(String sequence) {				
+        LinkedList<PhredScore> listOfScores = new LinkedList<PhredScore>();
 
         if (sequence != null) {
             String[] rawScores= sequence.split("\\s+");
