@@ -74,7 +74,7 @@ public class BarcodeBooster {
 
         barcodes = loadBarcodes();
 
-        initInputIO();        
+        initInputIO();
         dnaSequences =  FastaReaderHelper.readFastaDNASequence(fnaIn);        
         qualSequences = phredReader.process();
 

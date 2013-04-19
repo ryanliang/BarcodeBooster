@@ -12,6 +12,8 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.sun.jndi.toolkit.url.Uri;
+
 
 public class Driver {
 
@@ -31,7 +33,7 @@ public class Driver {
         CommandLineParser parser = new BasicParser();
         cmd = parser.parse(buildOptions(), argv);
         
-        File fnaIn, fnaOut, qualIn, qualOut;
+        File fnaIn, fnaOut, qualIn, qualOut;        
         
         if (isUserOptionValid()) {
             try {

@@ -15,7 +15,7 @@ public class BarcodeBoosterTest {
     private File fnaOut;
     private File qualIn;
     private File qualOut;
-    private String currPath = "C:\\temp\\"; 
+    private String currPath = "test/sample/"; 
     @Before
     public void setUp() {
         fnaIn = new File(currPath + "fna");
