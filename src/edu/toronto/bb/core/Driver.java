@@ -16,6 +16,7 @@ import org.apache.commons.cli.ParseException;
 public class Driver {
 
     private static final String bb = "bb"; // main cmd
+    
     // Command line options
     private static final String fi = "fi";  // FNA input
     private static final String fo = "fo";  // FNA output
@@ -40,8 +41,11 @@ public class Driver {
                 qualOut = new File(cmd.getOptionValue(qo));
                 BarcodeBooster bb = new BarcodeBooster(fnaIn, fnaOut, qualIn, qualOut);
                 bb.setMarker(cmd.getOptionValue(key));
+                bb.process();
             } catch (FileNotFoundException e) {
                 System.err.println("File not found: " + e.getMessage());                
+            } catch (Throwable e) {
+                e.printStackTrace();
             }  
         } else {
             HelpFormatter formatter = new HelpFormatter();
