@@ -1,4 +1,4 @@
-<project name="BarcodeBooster" default="dist" basedir=".">
+<project name="BarcodeBooster" default="dist" basedir="..">
     <description>
         Build BarcodeBooster
     </description>
@@ -12,7 +12,11 @@
         <fileset dir="lib">
             <include name="*.jar"/>
         </fileset>
-    </path>  
+    </path>
+	
+	<path id="jars">
+	    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
 
     <pathconvert property="mf.classpath" pathsep=" ">
         <path refid="project.class.path"/>
@@ -23,7 +27,7 @@
             </chainedmapper>
         </mapper>
     </pathconvert>
-
+		
     <target name="init">
         <!-- Create the time stamp -->
         <tstamp/>
@@ -33,8 +37,8 @@
 
     <target name="compile" depends="init" description="compile the source " >
         <!-- Compile the java code from ${src} into ${build} -->
-        <javac  srcdir="${src}" destdir="${build}">
-            <classpath refid="project.class.path"/>
+        <javac  srcdir="${src}" destdir="${build}" classpathref="jars">
+            <!--classpath refid="project.class.path"/-->
 
         </javac>
     </target>
@@ -45,7 +49,8 @@
         <mkdir dir="${dist}/lib"/>
 
         <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-        <jar jarfile="${dist}/lib/bb-${DSTAMP}.jar" basedir="${build}">
+        <jar jarfile="${dist}/lib/bb.jar" basedir="${build}">        	
+        	<zipgroupfileset dir="lib" includes="*.jar" excludes="junit*.jar,hamcrest*.jar"/>
             <manifest>
                 <attribute name="Main-Class" value="edu.toronto.bb.core.Driver"/>
                 <attribute name="Class-Path" value="${mf.classpath}"/>
