@@ -60,7 +60,7 @@ public class BarcodeBooster {
 
     private String marker = "";  // key to be inserted
 
-    public BarcodeBooster(File fnaIn, File fnaOut, File qualIn, File qualOut) throws FileNotFoundException {
+    public BarcodeBooster(File fnaIn, File fnaOut, File qualIn, File qualOut) {
         this.fnaIn = fnaIn;
         this.fnaOut = fnaOut;
         this.qualIn = qualIn;
