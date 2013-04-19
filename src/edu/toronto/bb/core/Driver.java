@@ -27,9 +27,13 @@ public class Driver {
     private static CommandLine cmd;
     private static Options options;
 
-    public static void main(String[] argv) throws ParseException {
+    public static void main(String[] argv) {
         CommandLineParser parser = new BasicParser();
-        cmd = parser.parse(buildOptions(), argv);
+        try {
+            cmd = parser.parse(buildOptions(), argv);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
         
         File fnaIn, fnaOut, qualIn, qualOut;        
         
