@@ -15,9 +15,9 @@
         </fileset>
     </path>
 	
-	<path id="jars">
-	    <fileset dir="${lib}" includes="**/*.jar"/>
-	</path>
+    <path id="jars">
+        <fileset dir="${lib}" includes="**/*.jar"/>
+    </path>
 
     <pathconvert property="mf.classpath" pathsep=" ">
         <path refid="project.class.path"/>
@@ -40,10 +40,7 @@
 
     <target name="compile" depends="init" description="compile the source " >
         <!-- Compile the java code from ${src} into ${build} -->
-        <javac  srcdir="${src}" destdir="${build}" classpathref="jars">
-            <!--classpath refid="project.class.path"/-->
-
-        </javac>
+        <javac  srcdir="${src}" destdir="${build}" classpathref="jars"/>        
     </target>
 
     <target name="dist" depends="compile"
