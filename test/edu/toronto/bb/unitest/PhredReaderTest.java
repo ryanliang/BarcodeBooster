@@ -22,7 +22,7 @@ public class PhredReaderTest {
     @Before
     public void setUp() {       
         //      fna = new File("C:\\temp\\java_projects\\BarcodeBooster\\test\\sample\\fna"); // at work
-        qual = new File("/home/ryan/java_projects/BarcodeBooster/test/sample/qual"); // at work
+        qual = new File("test/sample/qual"); // at work
     }
     
     @Test

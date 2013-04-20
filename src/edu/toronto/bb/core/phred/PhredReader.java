@@ -11,6 +11,8 @@ import java.util.LinkedHashMap;
 import org.biojava3.core.sequence.AccessionID;
 import org.biojava3.core.sequence.io.BufferedReaderBytesRead;
 
+import edu.toronto.bb.common.Constants;
+
 public class PhredReader {
     
     BufferedReaderBytesRead  br;
@@ -32,8 +34,7 @@ public class PhredReader {
         LinkedHashMap<String, PhredScoreSequence> sequences = new LinkedHashMap<String, PhredScoreSequence>();
         
         String line = "";
-        String header = "";
-        String delimiter = " "; // single space as delimiter                
+        String header = "";                
         StringBuilder sb = new StringBuilder();
         int maxSequenceLength = -1;
         boolean keepGoing = true;
@@ -54,7 +55,7 @@ public class PhredReader {
                 } else if (line.startsWith(";")) { // ignore comment line                    
                 } else {
                     sb.append(line);
-                    sb.append(delimiter);
+                    sb.append(Constants.SCORE_DELIMITER);
                 }                    
             }
             

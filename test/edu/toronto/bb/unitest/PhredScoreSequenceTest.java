@@ -30,7 +30,7 @@ public class PhredScoreSequenceTest {
     @Test
     public void shouldReadPhredSequence() {
         PhredScoreSequence pss = new PhredScoreSequence(phredStr);		
-        Iterator<PhredScore> itr = pss.iterator();
+        Iterator<String> itr = pss.iterator();
         StringBuffer sb = new StringBuffer();
         while (itr.hasNext()) {
             sb.append(itr.next());
@@ -43,46 +43,46 @@ public class PhredScoreSequenceTest {
     @Test
     public void shouldGetAllScores() {
         PhredScoreSequence pss = new PhredScoreSequence(phredStr);		
-        assertEquals(197, pss.getScores().size());
+        assertEquals(197, pss.getScores().length());
     }
 
-    @Test
-    public void shouldGetScoreAtPosition() {
-        PhredScoreSequence pss = new PhredScoreSequence(phredStr);		
-        assertEquals(37, pss.scoreAt(0).getScoreValue());
-        assertEquals(19, pss.scoreAt(pss.getScores().size() - 1).getScoreValue());
-        assertEquals(40, pss.scoreAt(11).getScoreValue());
-    }
+//    @Test
+//    public void shouldGetScoreAtPosition() {
+//        PhredScoreSequence pss = new PhredScoreSequence(phredStr);		
+//        assertEquals(37, pss.scoreAt(0).getScoreValue());
+//        assertEquals(19, pss.scoreAt(pss.getScores().size() - 1).getScoreValue());
+//        assertEquals(40, pss.scoreAt(11).getScoreValue());
+//    }
 
-    @Test
-    public void shouldSetScoreAtPosition() {
-        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
-
-        pss.setScoreAt(new PhredScore(7), 0);
-        assertEquals(7, pss.scoreAt(0).getScoreValue());
-
-        pss.setScoreAt(new PhredScore(7), 196);
-        assertEquals(7, pss.scoreAt(pss.getScores().size() - 1).getScoreValue());
-
-        pss.setScoreAt(new PhredScore(7), 12);
-        assertEquals(7, pss.scoreAt(12).getScoreValue());
-    }
+//    @Test
+//    public void shouldSetScoreAtPosition() {
+//        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
+//
+//        pss.setScoreAt(new PhredScore(7), 0);
+//        assertEquals(7, pss.scoreAt(0).getScoreValue());
+//
+//        pss.setScoreAt(new PhredScore(7), 196);
+//        assertEquals(7, pss.scoreAt(pss.getScores().size() - 1).getScoreValue());
+//
+//        pss.setScoreAt(new PhredScore(7), 12);
+//        assertEquals(7, pss.scoreAt(12).getScoreValue());
+//    }
     
-    @Test
-    public void shouldHanleSingleDigitScore() {
-        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
-
-        pss.setScoreAt(new PhredScore(7), 0);
-        assertEquals(0, pss.scoreAt(147).getScoreValue());
-
-    }
+//    @Test
+//    public void shouldHanleSingleDigitScore() {
+//        PhredScoreSequence pss = new PhredScoreSequence(phredStr);
+//
+//        pss.setScoreAt(new PhredScore(7), 0);
+//        assertEquals(0, pss.scoreAt(147).getScoreValue());
+//
+//    }
     
     @Test
     public void shouldPushNewScore() {
         PhredScoreSequence pss = new PhredScoreSequence(phredStr);
 
-        pss.pushScore(new PhredScore(17));
-        assertEquals(17, pss.scoreAt(0).getScoreValue());
+        pss.pushScore("17");
+        assertEquals(17, pss.getScores().startsWith("17"));
 
     }
 

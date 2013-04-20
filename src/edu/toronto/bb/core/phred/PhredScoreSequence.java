@@ -8,47 +8,33 @@ import java.util.List;
 import org.biojava3.core.sequence.AccessionID;
 import org.biojava3.core.sequence.template.Accessioned;
 
-public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
+import edu.toronto.bb.common.Constants;
 
-    private LinkedList<PhredScore> phredScores;
+public class PhredScoreSequence implements Iterable<String>, Accessioned {
+
+    private String phredScores;
     private AccessionID accesionID;
-    
 
-    public PhredScoreSequence(String sequence) {		
-        this.phredScores = parsePhredScoreList(sequence);
+    public PhredScoreSequence(String phredScores) {		
+        this.phredScores = phredScores;
     }
-
-    public PhredScore scoreAt(int index) {
-        return phredScores.get(index);
-    }	
-
-    public List<PhredScore> getScores() {
+    
+    public String getScores() {
         return phredScores;
     }
-
-    public void setScoreAt(PhredScore score, int index) {
-        phredScores.set(index, score);
-    }
-    
-    public void pushScore(PhredScore score) {
-        phredScores.push(score);
+   
+    public void pushScore(String score) {
+        String maskedScore = "";
+        if (score.length() == 1) {
+            maskedScore = score + " "; // append a single space for single digit score
+        } else {
+            maskedScore = score;
+        }
+        phredScores = maskedScore + Constants.SCORE_DELIMITER + phredScores;
     }
 
     public int length() {
-        return phredScores.size();
-    }
-
-    private LinkedList<PhredScore> parsePhredScoreList(String sequence) {				
-        LinkedList<PhredScore> listOfScores = new LinkedList<PhredScore>();
-
-        if (sequence != null) {
-            String[] rawScores= sequence.split("\\s+");
-            for (String score : rawScores) {
-                listOfScores.add(new PhredScore(Integer.parseInt(score)));
-            }
-        }
-
-        return listOfScores;
+        return phredScores.length();
     }
     
     public void setAccessionID(AccessionID id) {
@@ -56,8 +42,12 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
     }
 
     @Override
-    public Iterator<PhredScore> iterator() {		
-        return phredScores.iterator();
+    public Iterator<String> iterator() {
+        String[] rawScores = phredScores.split("\\s+");
+        List<String> scoreList = new ArrayList<String>();
+        scoreList.toArray(rawScores);
+        
+        return scoreList.iterator();
     }
 
     @Override

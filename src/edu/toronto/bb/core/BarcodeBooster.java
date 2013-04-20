@@ -27,6 +27,7 @@ import org.biojava3.core.sequence.io.GenericFastaHeaderParser;
 import org.biojava3.core.sequence.io.template.FastaHeaderFormatInterface;
 import org.biojava3.core.sequence.io.template.SequenceCreatorInterface;
 
+import edu.toronto.bb.common.Constants;
 import edu.toronto.bb.core.phred.PhredReader;
 import edu.toronto.bb.core.phred.PhredScore;
 import edu.toronto.bb.core.phred.PhredScoreSequence;
@@ -114,7 +115,7 @@ public class BarcodeBooster {
                 if (currPhredScoreSequence == null) {
                     throw new IllegalArgumentException("No matching PhredScore Sequence with header " + entry.getKey());
                 } else {
-                    currPhredScoreSequence.pushScore(new PhredScore(PhredScore.MAX_SCORE));
+                    currPhredScoreSequence.pushScore(Integer.toString(Constants.MAX_SCORE));
                 }
             }
         }

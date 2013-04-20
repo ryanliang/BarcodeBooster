@@ -5,13 +5,14 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 
+import edu.toronto.bb.common.Constants;
+
 public class PhredWriter {
 
     OutputStream os;
     Collection<PhredScoreSequence> sequences;
     private int scoresPerLine = 60;
     byte[] lineSep = System.getProperty("line.separator").getBytes();
-    String delimiter = " "; // single space to separate the socres
 
     public PhredWriter(OutputStream os, Collection<PhredScoreSequence> sequences) {
         this.os = os;
@@ -48,26 +49,25 @@ public class PhredWriter {
     }
 
     private void buildSequenceContents(PhredScoreSequence sequence) throws IOException {
-        List<PhredScore> scores = sequence.getScores();
-        int seqSize = scores.size();
+        String scores = sequence.getScores();
+        int seqSize = scores.length();
         int scoresWrittenSoFar = 0;
-
+        
         for (int i = 0; i < seqSize; i++) {
             scoresWrittenSoFar++;
-            if (shouldWriteLineSep(scoresWrittenSoFar, seqSize)) {
-                os.write(scores.get(i).toString().getBytes());
+            if (shouldWriteLineSep(i)) {
+                os.write(scores.charAt(i));
                 os.write(lineSep);
             } else {
-                os.write(scores.get(i).toString().getBytes());
-                os.write(delimiter.getBytes());
+                os.write(scores.charAt(i));
+                os.write(Constants.SCORE_DELIMITER.getBytes());
             }                        
         }
         os.write(lineSep);  // end of the current sequence
     }
-    
-    private boolean shouldWriteLineSep(int scoresWrittenSoFar, int seqSize) {
-        return scoresWrittenSoFar % scoresPerLine == 0 
-                &&  scoresWrittenSoFar != seqSize;  // no need to write new line at the end of current sequence sample
+   
+    private boolean shouldWriteLineSep(int currIndexInSeq) {
+        return currIndexInSeq == (Constants.DIGITS_IN_SCORE + Constants.SCORE_DELIMITER.length()) * Constants.SCORES_PER_LINE; 
     }
 
 
