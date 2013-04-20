@@ -58,19 +58,20 @@ public class PhredWriter {
         for (int i = 0; i < seqSize; i++) {            
             charsWrittenSoFar++;
             if (shouldWriteLineSep(charsWrittenSoFar)) {
-                os.write(sb.substring(0, lineLength - 1).toString().getBytes());
+                os.write(sb.toString().trim().getBytes());
                 os.write(lineSep);
                 sb = new StringBuilder(lineLength);
             } else {
                 sb.append(scores.charAt(i));
             }
         }
-        os.write(lineSep);  // end of the current sequence
+        // last line in sequence
+        os.write(sb.toString().getBytes());
+        os.write(lineSep);  
     }
    
     private boolean shouldWriteLineSep(int charsWrittenSoFar) {
         return (charsWrittenSoFar) % (lineLength) == 0; 
-//        return (charsWrittenSoFar % lineLength) ==; 
     }
     
 }
