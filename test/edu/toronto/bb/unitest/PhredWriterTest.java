@@ -22,7 +22,7 @@ public class PhredWriterTest {
 
     @Before
     public void setUp() {       
-        qual = new File("C:\\temp\\java_projects\\BarcodeBooster\\test\\sample\\qual"); // at work
+        qual = new File("test/sample/qual"); // at work
         //        qual = new File("/home/ryan/java_projects/BarcodeBooster/test/sample/qual"); // at work
         outputQual = new File("C:\\temp\\out.qual"); // at work
     }

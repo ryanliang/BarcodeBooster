@@ -51,27 +51,22 @@ public class PhredWriter {
     private void buildSequenceContents(PhredScoreSequence sequence) throws IOException {
         String scores = sequence.getScores();
         int seqSize = scores.length();
-        int scoresWrittenSoFar = 0;
+        int charsWrittenSoFar = 0;
         
         for (int i = 0; i < seqSize; i++) {
-            scoresWrittenSoFar++;
-            if (shouldWriteLineSep(i)) {
+            charsWrittenSoFar++;
+            if (shouldWriteLineSep(charsWrittenSoFar)) {
                 os.write(scores.charAt(i));
                 os.write(lineSep);
             } else {
-                os.write(scores.charAt(i));
-                os.write(Constants.SCORE_DELIMITER.getBytes());
+                os.write(scores.charAt(i));              
             }                        
         }
         os.write(lineSep);  // end of the current sequence
     }
    
-    private boolean shouldWriteLineSep(int currIndexInSeq) {
-        return currIndexInSeq == (Constants.DIGITS_IN_SCORE + Constants.SCORE_DELIMITER.length()) * Constants.SCORES_PER_LINE; 
+    private boolean shouldWriteLineSep(int charsWrittenSoFar) {
+        return charsWrittenSoFar % ((Constants.DIGITS_IN_SCORE + Constants.SCORE_DELIMITER.length()) * scoresPerLine) == 0; 
     }
-
-
-
-
-
+    
 }
