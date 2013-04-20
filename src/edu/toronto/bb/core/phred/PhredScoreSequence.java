@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.biojava3.core.sequence.AccessionID;
 import org.biojava3.core.sequence.template.Accessioned;
@@ -12,7 +14,7 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
 
     private LinkedList<PhredScore> phredScores;
     private AccessionID accesionID;
-    
+
 
     public PhredScoreSequence(String sequence) {		
         this.phredScores = parsePhredScoreList(sequence);
@@ -29,7 +31,7 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
     public void setScoreAt(PhredScore score, int index) {
         phredScores.set(index, score);
     }
-    
+
     public void pushScore(PhredScore score) {
         phredScores.push(score);
     }
@@ -41,16 +43,18 @@ public class PhredScoreSequence implements Iterable<PhredScore>, Accessioned {
     private LinkedList<PhredScore> parsePhredScoreList(String sequence) {				
         LinkedList<PhredScore> listOfScores = new LinkedList<PhredScore>();
 
+        Pattern pattern= Pattern.compile("[0-9]+");
+
         if (sequence != null) {
-            String[] rawScores= sequence.split("\\s+");
-            for (String score : rawScores) {
-                listOfScores.add(new PhredScore(Integer.parseInt(score)));
+            Matcher matcher = pattern.matcher(sequence);
+            while(matcher.find()) {
+                listOfScores.add(new PhredScore(Integer.parseInt(matcher.group().intern())));;
             }
         }
 
         return listOfScores;
     }
-    
+
     public void setAccessionID(AccessionID id) {
         this.accesionID = id;
     }
