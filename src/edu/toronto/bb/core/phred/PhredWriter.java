@@ -13,6 +13,7 @@ public class PhredWriter {
     Collection<PhredScoreSequence> sequences;
     private int scoresPerLine = 60;
     byte[] lineSep = System.getProperty("line.separator").getBytes();
+    int lineLength = (Constants.DIGITS_IN_SCORE + Constants.SCORE_DELIMITER.length()) * scoresPerLine;
 
     public PhredWriter(OutputStream os, Collection<PhredScoreSequence> sequences) {
         this.os = os;
@@ -48,25 +49,28 @@ public class PhredWriter {
         os.write(lineSep);
     }
 
-    private void buildSequenceContents(PhredScoreSequence sequence) throws IOException {
+    private void buildSequenceContents(PhredScoreSequence sequence) throws IOException {        
         String scores = sequence.getScores();
         int seqSize = scores.length();
         int charsWrittenSoFar = 0;
+        StringBuilder sb = new StringBuilder(lineLength);
         
-        for (int i = 0; i < seqSize; i++) {
+        for (int i = 0; i < seqSize; i++) {            
             charsWrittenSoFar++;
             if (shouldWriteLineSep(charsWrittenSoFar)) {
-                os.write(scores.charAt(i));
+                os.write(sb.substring(0, lineLength - 1).toString().getBytes());
                 os.write(lineSep);
+                sb = new StringBuilder(lineLength);
             } else {
-                os.write(scores.charAt(i));              
-            }                        
+                sb.append(scores.charAt(i));
+            }
         }
         os.write(lineSep);  // end of the current sequence
     }
    
     private boolean shouldWriteLineSep(int charsWrittenSoFar) {
-        return charsWrittenSoFar % ((Constants.DIGITS_IN_SCORE + Constants.SCORE_DELIMITER.length()) * scoresPerLine) == 0; 
+        return (charsWrittenSoFar) % (lineLength) == 0; 
+//        return (charsWrittenSoFar % lineLength) ==; 
     }
     
 }
