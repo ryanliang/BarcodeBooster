@@ -49,7 +49,10 @@ public class PhredReader {
                         if (maxSequenceLength < sb.length()) {
                             maxSequenceLength = sb.length();
                         }
-                        sb = new StringBuilder(maxSequenceLength);
+//                        sb = new StringBuilder(maxSequenceLength);
+                        sb.setLength(0);
+//                        sb.setLength(maxSequenceLength);
+                        
                     }
                     header = line.substring(1);
                 } else if (line.startsWith(";")) { // ignore comment line                    
