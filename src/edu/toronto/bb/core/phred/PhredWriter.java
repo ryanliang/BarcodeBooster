@@ -57,7 +57,7 @@ public class PhredWriter {
         
         for (int i = 0; i < seqSize; i++) {            
             charsWrittenSoFar++;
-            if (shouldWriteLineSep(charsWrittenSoFar)) {
+            if (shouldWriteLineSep(charsWrittenSoFar, seqSize)) {
                 os.write(sb.toString().trim().getBytes());
                 os.write(lineSep);
                 sb = new StringBuilder(lineLength);
@@ -70,8 +70,9 @@ public class PhredWriter {
         os.write(lineSep);  
     }
    
-    private boolean shouldWriteLineSep(int charsWrittenSoFar) {
-        return (charsWrittenSoFar) % (lineLength) == 0; 
+    private boolean shouldWriteLineSep(int charsWrittenSoFar, int seqSize) {
+        return (charsWrittenSoFar) % (lineLength) == 0 &&
+                charsWrittenSoFar != seqSize; 
     }
     
 }
