@@ -1,7 +1,8 @@
 Process Sequence Files
 ======================
 
-A Java command line tool to pre-proess the DNA Sequence in [FASTA format](http://en.wikipedia.org/wiki/FASTA_format).
+A Java command line tool to pre-process the DNA Sequence in [FASTA format](http://en.wikipedia.org/wiki/FASTA_format) 
+before feeding the sequence to [QIIME](http://qiime.org/).
 
 Built with the following:
 - [BioJava](http://www.biojava.org/)
